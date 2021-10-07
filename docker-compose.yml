@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+    laravel-project-manager:
+        build:
+            context: .
+            dockerfile: .docker/php-8.0/Dockerfile
+        ports:
+            - "80:80"
+        volumes:
+            - .:/var/www/html
+        networks:
+            - project-manager
+
+    mariadb-project-manager:
+        image: mariadb
+        # Windows Bug
+        command: --innodb-use-native-aio=0
+        restart: always
+        ports:
+            - "${DB_PORT}:3306"
+        volumes:
+            - .docker/data:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+        networks:
+            - project-manager
+
+    node-project-manager:
+        build:
+            context: .
+            dockerfile: .docker/node/Dockerfile
+        ports:
+            - '8080:8080'
+        volumes:
+            - ./:/app
+networks:
+    project-manager:
+        driver: bridge
