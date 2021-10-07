@@ -2,10 +2,6 @@
 
 cd /var/www/html
 
-if [ ! -f ".env" ]; then
-    cp .env.example .env
-fi
-
 composer install
 php artisan cache:clear
 php artisan config:cache
