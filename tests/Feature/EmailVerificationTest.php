@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Core\Providers\RouteServiceProvider;
-use App\Models\User;
+use Domain\User\Models\User;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
