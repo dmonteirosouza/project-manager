@@ -28,14 +28,16 @@ final class ListProjectAction
             unset($project->tasks_complete_count);
             unset($project->tasks_incomplete_count);
 
-            $percent = ($tasksComplete / ($tasksComplete + $tasksIncomplete)) * 100;
+            $totalTasks = ($tasksComplete + $tasksIncomplete);
+
+            $percent = ($tasksComplete / ($totalTasks ?: 1)) * 100;
 
             $project->percent = (float)number_format($percent, 2);
 
-            $project->deadline = $tasks
-                    ->where('finish', '>', $project->finish)
-                    ->sortByDesc('finish')
-                    ->first() ? true : false;
+            $project->deadline = (bool)$tasks
+                ->where('finish', '>', $project->finish)
+                ->sortByDesc('finish')
+                ->first();
 
             return $project;
         });

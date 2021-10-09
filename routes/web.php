@@ -1,5 +1,7 @@
 <?php
 
+use App\Web\Task\Controllers\TaskController;
+use App\Web\Project\Controllers\ProjectController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,3 +29,11 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
+
+Route::prefix('projects')->name('web.projects.')->group(function() {
+    Route::get('/', [ProjectController::class, 'index'])->name('index');
+
+    Route::prefix('{project_id}/tasks')->name('tasks.')->group(function() {
+        Route::get('/', [TaskController::class, 'index'])->name('index');
+    });
+});
