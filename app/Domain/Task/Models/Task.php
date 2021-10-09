@@ -19,5 +19,6 @@ class Task extends Model
     protected $casts = [
         'start' => 'date:Y-m-d',
         'finish' => 'date:Y-m-d',
+        'status' => 'boolean',
     ];
 }
