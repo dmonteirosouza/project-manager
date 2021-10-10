@@ -11,11 +11,13 @@ This is a simple project manager designed to test your programming knowledge
         - [Installation](#installation)
 - [Usage](#usage)
 - [Documentation](#documentation)
-  - [List Projects](#list-projects)
+  - [List projects](#list-projects)
   - [Add new project](#add-new-project)
-  - [List Projects](#list-projects)
+  - [Delete project](#delete-project)
+  - [List tasks](#list-projects)
   - [Add new task](#add-new-task)
   - [Update task status](#update-task-status)
+  - [Delete task](#delete-task)
 - [Status Codes](#status-codes)
 - [Technologies used](#technologies-used)
 
@@ -90,21 +92,29 @@ npm run dev
 
 ![plot](./screenshots/project-saved.PNG)
 
-6) On this page are listed the tasks.
+6) You can delete a project by clicking the button (delete).
+
+![plot](./screenshots/delete-project.PNG)
+
+7) On this page are listed the tasks.
 
 ![plot](./screenshots/tasks.PNG)
 
-7) You can register a new task.
+8) You can register a new task.
 
 ![plot](./screenshots/new-task.PNG)
 
-8) When you save, a message is displayed.
+9) When you save, a message is displayed.
 
 ![plot](./screenshots/task-saved.PNG)
 
-9) You can change the task status by clicking the button (yes/no).
+10) You can change the task status by clicking the button (Mark as not completed/Mark as completed).
 
 ![plot](./screenshots/task-changed.PNG)
+
+6) You can delete a task by clicking the button (delete).
+
+![plot](./screenshots/delete-task.PNG)
 
 ## Documentation
 
@@ -159,6 +169,19 @@ http://localhost/api/projects
 }
 ```
 
+### Delete project
+```http
+curl -X DELETE http://localhost/api/projects/{project_id}
+```
+
+#### Response
+```json
+{
+    "error": false,
+    "payload": true
+}
+
+```
 ### List tasks
 ```http
 curl -X GET http://localhost/api/projects/{project_id}/tasks
@@ -217,6 +240,19 @@ http://localhost/api/projects/{project_id}/tasks
 curl -X PUT -H 'Content-Type: application/json' \
 http://localhost/api/projects/{project_id}/tasks/{task_id}
 ```
+#### Response
+```json
+{
+    "error": false,
+    "payload": true
+}
+```
+
+### Delete task
+```http
+curl -X DELETE http://localhost/api/projects/{project_id}/tasks/{task_id}
+```
+
 #### Response
 ```json
 {
