@@ -28,7 +28,7 @@
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                             <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Start</th>
                             <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Deadline</th>
-                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Complete</th>
+                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
                         </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -49,6 +49,7 @@
 import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import TaskItem from './Partials/TaskItem'
+import emitter from 'tiny-emitter/instance'
 
 export default defineComponent({
     components: {
@@ -60,14 +61,22 @@ export default defineComponent({
             tasks: []
         }
     },
-    mounted() {
-        const params = route().params
+    methods: {
+      loadTasks() {
+          const params = route().params
 
-        axios.get(route('api.projects.tasks.index', { project_id: params.project_id })).then(response => {
-            this.tasks = response.data.payload
-        }).catch(err => {
-            console.log(err)
+          axios.get(route('api.projects.tasks.index', { project_id: params.project_id })).then(response => {
+              this.tasks = response.data.payload
+          }).catch(err => {
+              console.log(err)
+          })
+      }
+    },
+    mounted() {
+        emitter.on('deleteTask', () => {
+            this.loadTasks()
         })
+        this.loadTasks()
     }
 })
 </script>

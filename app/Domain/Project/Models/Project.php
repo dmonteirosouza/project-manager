@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Domain\Projects\Models;
+namespace Domain\Project\Models;
 
 
 use Domain\Task\Models\Task;

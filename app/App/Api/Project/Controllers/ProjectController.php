@@ -6,10 +6,10 @@ namespace App\Api\Project\Controllers;
 
 use App\Api\Project\Requests\ProjectRequest;
 use App\Core\Http\Controllers\Controller;
-use Domain\Projects\Actions\CreateProjectAction;
-use Domain\Projects\Actions\DeleteProjectAction;
-use Domain\Projects\Actions\ListProjectAction;
-use Domain\Projects\DTO\ProjectDTO;
+use Domain\Project\Actions\CreateProjectAction;
+use Domain\Project\Actions\DeleteProjectAction;
+use Domain\Project\Actions\ListProjectAction;
+use Domain\Project\DTO\ProjectDTO;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Throwable;

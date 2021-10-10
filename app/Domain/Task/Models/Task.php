@@ -4,7 +4,7 @@
 namespace Domain\Task\Models;
 
 
-use Domain\Projects\Models\Project;
+use Domain\Project\Models\Project;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model

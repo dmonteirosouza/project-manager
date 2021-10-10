@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Domain\Projects\Actions;
+namespace Domain\Project\Actions;
 
 
 use Carbon\Carbon;
-use Domain\Projects\Models\Project;
+use Domain\Project\Models\Project;
 use Illuminate\Database\Eloquent\Collection;
 
 final class ListProjectAction

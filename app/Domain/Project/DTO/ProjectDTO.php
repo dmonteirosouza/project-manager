@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Domain\Projects\DTO;
+namespace Domain\Project\DTO;
 
 
 use App\Api\Project\Requests\ProjectRequest;

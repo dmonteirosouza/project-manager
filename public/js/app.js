@@ -21204,6 +21204,8 @@ __webpack_require__.r(__webpack_exports__);
   props: ['project'],
   methods: {
     deleteProject: function deleteProject(project) {
+      var _this = this;
+
       this.$swal({
         title: "Delete this project?",
         text: "Are you sure? You won't be able to revert this!",
@@ -21217,6 +21219,8 @@ __webpack_require__.r(__webpack_exports__);
             project_id: project.id
           })).then(function (response) {
             tiny_emitter_instance__WEBPACK_IMPORTED_MODULE_0___default().emit('deleteProject');
+
+            _this.$swal('Project was removed successfully!', '', 'success');
           })["catch"](function (err) {
             console.log(err);
           });
@@ -21294,6 +21298,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/AppLayout.vue */ "./resources/js/Layouts/AppLayout.vue");
 /* harmony import */ var _Partials_TaskItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Partials/TaskItem */ "./resources/js/Pages/Task/Partials/TaskItem.vue");
+/* harmony import */ var tiny_emitter_instance__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tiny-emitter/instance */ "./node_modules/tiny-emitter/instance.js");
+/* harmony import */ var tiny_emitter_instance__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(tiny_emitter_instance__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 
@@ -21307,17 +21314,27 @@ __webpack_require__.r(__webpack_exports__);
       tasks: []
     };
   },
-  mounted: function mounted() {
-    var _this = this;
+  methods: {
+    loadTasks: function loadTasks() {
+      var _this = this;
 
-    var params = route().params;
-    axios.get(route('api.projects.tasks.index', {
-      project_id: params.project_id
-    })).then(function (response) {
-      _this.tasks = response.data.payload;
-    })["catch"](function (err) {
-      console.log(err);
+      var params = route().params;
+      axios.get(route('api.projects.tasks.index', {
+        project_id: params.project_id
+      })).then(function (response) {
+        _this.tasks = response.data.payload;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    tiny_emitter_instance__WEBPACK_IMPORTED_MODULE_3___default().on('deleteTask', function () {
+      _this2.loadTasks();
     });
+    this.loadTasks();
   }
 }));
 
@@ -21334,6 +21351,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var tiny_emitter_instance__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tiny-emitter/instance */ "./node_modules/tiny-emitter/instance.js");
+/* harmony import */ var tiny_emitter_instance__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tiny_emitter_instance__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "TaskItem",
   props: ['task'],
@@ -21350,6 +21370,31 @@ __webpack_require__.r(__webpack_exports__);
         _this.$swal('Task was changed successfully!', '', 'success');
       })["catch"](function (err) {
         _this.$swal(err.response.data.message || err.response.data.payload, '', 'error');
+      });
+    },
+    deleteTask: function deleteTask(task) {
+      var _this2 = this;
+
+      this.$swal({
+        title: "Delete this task?",
+        text: "Are you sure? You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Yes, Delete it!"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios["delete"](route('api.projects.tasks.destroy', {
+            project_id: task.project_id,
+            task_id: task.id
+          }), {}).then(function (response) {
+            tiny_emitter_instance__WEBPACK_IMPORTED_MODULE_0___default().emit('deleteProject');
+
+            _this2.$swal('Task was removed successfully!', '', 'success');
+          })["catch"](function (err) {
+            _this2.$swal(err.response.data.message || err.response.data.payload, '', 'error');
+          });
+        }
       });
     }
   }
@@ -26277,7 +26322,7 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 }, "Deadline"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   scope: "col",
   "class": "px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-}, "Complete")])], -1
+})])], -1
 /* HOISTED */
 );
 
@@ -26371,10 +26416,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
       'bg-green-500 hover:bg-green-400 border-green-700 hover:border-green-500': $props.task.status,
       'bg-pink-500 hover:bg-pink-400 border-pink-700 hover:border-pink-500': !$props.task.status
-    }, "text-white font-bold py-1 px-4 border-b-4 rounded mb-2"])
-  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.task.status ? 'Yes' : 'No'), 3
+    }, "text-white font-bold py-1 px-4 border-b-4 rounded mb-2 mr-1"])
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.task.status ? 'Mark as not completed' : 'Mark as completed'), 3
   /* TEXT, CLASS */
-  )])]);
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return $options.deleteTask($props.task);
+    }),
+    "class": "bg-pink-500 hover:pink text-white font-bold py-1 px-4 border-b-4 border-pink-700 hover:border-pink-500 rounded"
+  }, " Delete ")])]);
 }
 
 /***/ }),

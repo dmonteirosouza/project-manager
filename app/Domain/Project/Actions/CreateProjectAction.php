@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Domain\Projects\Actions;
+namespace Domain\Project\Actions;
 
 
-use Domain\Projects\DTO\ProjectDTO;
-use Domain\Projects\Models\Project;
+use Domain\Project\DTO\ProjectDTO;
+use Domain\Project\Models\Project;
 
 final class CreateProjectAction
 {

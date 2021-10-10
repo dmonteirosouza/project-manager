@@ -7,7 +7,9 @@ namespace App\Api\Task\Controllers;
 use App\Api\Task\Requests\TaskRequest;
 use App\Api\Task\Requests\TaskStatusRequest;
 use App\Core\Http\Controllers\Controller;
+use Domain\Project\Actions\DeleteProjectAction;
 use Domain\Task\Actions\CreateTaskAction;
+use Domain\Task\Actions\DeleteTaskAction;
 use Domain\Task\Actions\ListTaskAction;
 use Domain\Task\Actions\UpdateTaskAction;
 use Domain\Task\DTO\TaskDTO;
@@ -59,6 +61,25 @@ class TaskController extends Controller
 
             return response()->json($response)->setStatusCode(Response::HTTP_OK);
 
+        } catch (Throwable $throwable) {
+            $response = [
+                'error' => true,
+                'payload' => $throwable->getMessage()
+            ];
+
+            return response()->json($response)->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function destroy(Request $request, DeleteTaskAction $action)
+    {
+        try {
+            $response = [
+                'error' => false,
+                'payload' => $action($request->route('project_id'), $request->route('task_id'))
+            ];
+
+            return response()->json($response)->setStatusCode(Response::HTTP_OK);
         } catch (Throwable $throwable) {
             $response = [
                 'error' => true,

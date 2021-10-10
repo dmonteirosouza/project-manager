@@ -76,6 +76,8 @@ export default {
                 if (result.isConfirmed) {
                     axios.delete(route('api.projects.destroy', {project_id: project.id})).then(response => {
                         emitter.emit('deleteProject')
+
+                        this.$swal('Project was removed successfully!', '', 'success')
                     }).catch(err => {
                         console.log(err)
                     })

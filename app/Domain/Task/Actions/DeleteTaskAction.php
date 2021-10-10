@@ -7,7 +7,7 @@ namespace Domain\Task\Actions;
 use Domain\Task\Models\Task;
 use Exception;
 
-class UpdateTaskAction
+final class DeleteTaskAction
 {
     /**
      * @throws Exception
@@ -20,10 +20,7 @@ class UpdateTaskAction
         ])->first();
 
         if ($task) {
-            $task->status = !$task->status;
-            $task->save();
-
-            return $task->status;
+            return $task->delete();
         }
 
         throw new Exception('This task doesn\'t belong to the project');
