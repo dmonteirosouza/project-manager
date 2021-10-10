@@ -74,7 +74,7 @@ npm run dev
 
 ![plot](./screenshots/register.PNG)
 
-2) Fill in the data and save.
+2) Fill the data and save.
 
 ![plot](./screenshots/data.PNG)
 
@@ -102,7 +102,7 @@ npm run dev
 
 ![plot](./screenshots/task-saved.PNG)
 
-9) You can change task status.
+9) You can change the task status by clicking the button (yes/no).
 
 ![plot](./screenshots/task-changed.PNG)
 
