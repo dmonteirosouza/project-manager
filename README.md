@@ -70,7 +70,7 @@ npm run dev
 
 ## Usage
 
-1) Open in your browser [http://localhost](http://localhost) and click in **Register**.
+1) Open in your browser [http://localhost/](http://localhost/) or [http://137.184.144.231/](http://137.184.144.231/) and click in **Register**.
 
 ![plot](./screenshots/register.PNG)
 
