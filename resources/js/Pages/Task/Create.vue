@@ -77,9 +77,9 @@ export default defineComponent({
                     start: '',
                     finish: '',
                 }
-                this.$swal('Task was created successfully!', '', 'success');
+                this.$swal('Task was created successfully!', '', 'success')
             }).catch(err => {
-                this.$swal(err.response.data.message || err.response.data.payload, '', 'error');
+                this.$swal(err.response.data.message || err.response.data.payload, '', 'error')
             })
         }
     }

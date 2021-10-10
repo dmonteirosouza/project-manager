@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('projects')->name('api.projects.')->group(function() {
     Route::get('/', [ProjectController::class, 'index'])->name('index');
     Route::post('/', [ProjectController::class, 'store'])->name('store');
+    Route::delete('/{project_id}', [ProjectController::class, 'destroy'])->name('destroy');
 
     Route::prefix('{project_id}/tasks')->name('tasks.')->group(function() {
         Route::get('/', [TaskController::class, 'index'])->name('index');

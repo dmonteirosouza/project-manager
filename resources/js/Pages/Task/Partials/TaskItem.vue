@@ -27,9 +27,9 @@ export default {
             axios.put(route('api.projects.tasks.update', { project_id: task.project_id, task_id: task.id }), {}).then(response => {
                 task.status = response.data.payload
 
-                this.$swal('Task was changed successfully!', '', 'success');
+                this.$swal('Task was changed successfully!', '', 'success')
             }).catch(err => {
-                this.$swal(err.response.data.message || err.response.data.payload, '', 'error');
+                this.$swal(err.response.data.message || err.response.data.payload, '', 'error')
             })
         }
     }

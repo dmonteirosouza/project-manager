@@ -43,6 +43,7 @@
 import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import ProjectItem from './Partials/ProjectItem'
+import emitter from 'tiny-emitter/instance'
 
 export default defineComponent({
     components: {
@@ -54,12 +55,20 @@ export default defineComponent({
             projects: []
         }
     },
+    methods: {
+        loadProjects() {
+            axios.get(route('api.projects.index')).then(response => {
+                this.projects = response.data.payload
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+    },
     mounted() {
-        axios.get(route('api.projects.index')).then(response => {
-            this.projects = response.data.payload
-        }).catch(err => {
-            console.log(err)
+        emitter.on('deleteProject', () => {
+            this.loadProjects()
         })
+        this.loadProjects()
     }
 })
 </script>

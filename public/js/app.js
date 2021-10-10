@@ -21146,6 +21146,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/AppLayout.vue */ "./resources/js/Layouts/AppLayout.vue");
 /* harmony import */ var _Partials_ProjectItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Partials/ProjectItem */ "./resources/js/Pages/Project/Partials/ProjectItem.vue");
+/* harmony import */ var tiny_emitter_instance__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tiny-emitter/instance */ "./node_modules/tiny-emitter/instance.js");
+/* harmony import */ var tiny_emitter_instance__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(tiny_emitter_instance__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 
@@ -21159,14 +21162,24 @@ __webpack_require__.r(__webpack_exports__);
       projects: []
     };
   },
-  mounted: function mounted() {
-    var _this = this;
+  methods: {
+    loadProjects: function loadProjects() {
+      var _this = this;
 
-    axios.get(route('api.projects.index')).then(function (response) {
-      _this.projects = response.data.payload;
-    })["catch"](function (err) {
-      console.log(err);
+      axios.get(route('api.projects.index')).then(function (response) {
+        _this.projects = response.data.payload;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    tiny_emitter_instance__WEBPACK_IMPORTED_MODULE_3___default().on('deleteProject', function () {
+      _this2.loadProjects();
     });
+    this.loadProjects();
   }
 }));
 
@@ -21183,9 +21196,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var tiny_emitter_instance__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tiny-emitter/instance */ "./node_modules/tiny-emitter/instance.js");
+/* harmony import */ var tiny_emitter_instance__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tiny_emitter_instance__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ProjectItem",
-  props: ['project']
+  props: ['project'],
+  methods: {
+    deleteProject: function deleteProject(project) {
+      this.$swal({
+        title: "Delete this project?",
+        text: "Are you sure? You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Yes, Delete it!"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios["delete"](route('api.projects.destroy', {
+            project_id: project.id
+          })).then(function (response) {
+            tiny_emitter_instance__WEBPACK_IMPORTED_MODULE_0___default().emit('deleteProject');
+          })["catch"](function (err) {
+            console.log(err);
+          });
+        }
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -26038,8 +26076,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         project_id: $props.project.id
       }));
     }),
-    "class": "bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
-  }, " Tasks ")])]);
+    "class": "bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded mr-1"
+  }, " Tasks "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return $options.deleteProject($props.project);
+    }),
+    "class": "bg-pink-500 hover:pink text-white font-bold py-1 px-4 border-b-4 border-pink-700 hover:border-pink-500 rounded"
+  }, " Delete ")])]);
 }
 
 /***/ }),
@@ -72247,6 +72290,95 @@ module.exports = function (list, options) {
     lastIdentifiers = newLastIdentifiers;
   };
 };
+
+/***/ }),
+
+/***/ "./node_modules/tiny-emitter/index.js":
+/*!********************************************!*\
+  !*** ./node_modules/tiny-emitter/index.js ***!
+  \********************************************/
+/***/ ((module) => {
+
+function E () {
+  // Keep this empty so it's easier to inherit from
+  // (via https://github.com/lipsmack from https://github.com/scottcorgan/tiny-emitter/issues/3)
+}
+
+E.prototype = {
+  on: function (name, callback, ctx) {
+    var e = this.e || (this.e = {});
+
+    (e[name] || (e[name] = [])).push({
+      fn: callback,
+      ctx: ctx
+    });
+
+    return this;
+  },
+
+  once: function (name, callback, ctx) {
+    var self = this;
+    function listener () {
+      self.off(name, listener);
+      callback.apply(ctx, arguments);
+    };
+
+    listener._ = callback
+    return this.on(name, listener, ctx);
+  },
+
+  emit: function (name) {
+    var data = [].slice.call(arguments, 1);
+    var evtArr = ((this.e || (this.e = {}))[name] || []).slice();
+    var i = 0;
+    var len = evtArr.length;
+
+    for (i; i < len; i++) {
+      evtArr[i].fn.apply(evtArr[i].ctx, data);
+    }
+
+    return this;
+  },
+
+  off: function (name, callback) {
+    var e = this.e || (this.e = {});
+    var evts = e[name];
+    var liveEvents = [];
+
+    if (evts && callback) {
+      for (var i = 0, len = evts.length; i < len; i++) {
+        if (evts[i].fn !== callback && evts[i].fn._ !== callback)
+          liveEvents.push(evts[i]);
+      }
+    }
+
+    // Remove event from queue to prevent memory leak
+    // Suggested by https://github.com/lazd
+    // Ref: https://github.com/scottcorgan/tiny-emitter/commit/c6ebfaa9bc973b33d110a84a307742b7cf94c953#commitcomment-5024910
+
+    (liveEvents.length)
+      ? e[name] = liveEvents
+      : delete e[name];
+
+    return this;
+  }
+};
+
+module.exports = E;
+module.exports.TinyEmitter = E;
+
+
+/***/ }),
+
+/***/ "./node_modules/tiny-emitter/instance.js":
+/*!***********************************************!*\
+  !*** ./node_modules/tiny-emitter/instance.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var E = __webpack_require__(/*! ./index.js */ "./node_modules/tiny-emitter/index.js");
+module.exports = new E();
+
 
 /***/ }),
 

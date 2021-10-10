@@ -60,8 +60,7 @@ DB_PASSWORD=<YOUR PASSWORD> #root
 
 ```shell
 composer install
-php artisan cache:clear
-php artisan config:cache
+php artisan optimize
 php artisan migrate:fresh --seed
 php artisan serve
 

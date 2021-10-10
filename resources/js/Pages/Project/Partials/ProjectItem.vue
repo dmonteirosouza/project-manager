@@ -42,17 +42,46 @@
         <td class="px-6 py-4 text-center whitespace-nowrap">
             <button
                 v-on:click="goto(route('web.projects.tasks.index', {project_id: project.id}))"
-                class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+                class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded mr-1"
             >
                 Tasks
+            </button>
+
+            <button
+                v-on:click="deleteProject(project)"
+                class="bg-pink-500 hover:pink text-white font-bold py-1 px-4 border-b-4 border-pink-700 hover:border-pink-500 rounded"
+            >
+                Delete
             </button>
         </td>
     </tr>
 </template>
 
 <script>
+import emitter from 'tiny-emitter/instance'
+
 export default {
     name: "ProjectItem",
-    props: ['project']
+    props: ['project'],
+    methods: {
+        deleteProject(project) {
+            this.$swal({
+                title: "Delete this project?",
+                text: "Are you sure? You won't be able to revert this!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "Yes, Delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete(route('api.projects.destroy', {project_id: project.id})).then(response => {
+                        emitter.emit('deleteProject')
+                    }).catch(err => {
+                        console.log(err)
+                    })
+                }
+            })
+        }
+    }
 }
 </script>
