@@ -47,19 +47,10 @@
 </template>
 
 <script>
-import moment from "moment";
 
 export default {
     name: "ProjectItem",
-    props: ['project'],
-    methods: {
-        moment: function (date) {
-            return moment(String(date)).format('DD/MM/YYYY')
-        },
-        goto(link){
-            window.location.href = link
-        }
-    }
+    props: ['project']
 }
 </script>
 

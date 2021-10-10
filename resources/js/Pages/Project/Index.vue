@@ -8,6 +8,11 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <button
+                    v-on:click="goto(route('web.projects.create'))"
+                    class="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded mb-2 block ml-auto">
+                    New Project
+                </button>
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
@@ -50,7 +55,7 @@ export default defineComponent({
         }
     },
     mounted() {
-        axios.get('api/projects').then(response => {
+        axios.get(route('api.projects.index')).then(response => {
             this.projects = response.data.payload
         }).catch(err => {
             console.log(err)

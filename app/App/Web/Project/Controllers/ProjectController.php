@@ -14,4 +14,9 @@ class ProjectController extends Controller
     {
         return Inertia::render('Project/Index');
     }
+
+    public function create(): Response
+    {
+        return Inertia::render('Project/Create');
+    }
 }

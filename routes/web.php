@@ -26,14 +26,17 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->group(function() {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
-Route::prefix('projects')->name('web.projects.')->group(function() {
-    Route::get('/', [ProjectController::class, 'index'])->name('index');
+    Route::prefix('projects')->name('web.projects.')->group(function() {
+        Route::get('/', [ProjectController::class, 'index'])->name('index');
+        Route::get('/create', [ProjectController::class, 'create'])->name('create');
 
-    Route::prefix('{project_id}/tasks')->name('tasks.')->group(function() {
-        Route::get('/', [TaskController::class, 'index'])->name('index');
+        Route::prefix('{project_id}/tasks')->name('tasks.')->group(function() {
+            Route::get('/', [TaskController::class, 'index'])->name('index');
+        });
     });
 });
