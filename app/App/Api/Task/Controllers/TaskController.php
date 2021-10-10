@@ -5,9 +5,11 @@ namespace App\Api\Task\Controllers;
 
 
 use App\Api\Task\Requests\TaskRequest;
+use App\Api\Task\Requests\TaskStatusRequest;
 use App\Core\Http\Controllers\Controller;
 use Domain\Task\Actions\CreateTaskAction;
 use Domain\Task\Actions\ListTaskAction;
+use Domain\Task\Actions\UpdateTaskAction;
 use Domain\Task\DTO\TaskDTO;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -36,6 +38,26 @@ class TaskController extends Controller
             ];
 
             return response()->json($response)->setStatusCode(Response::HTTP_CREATED);
+
+        } catch (Throwable $throwable) {
+            $response = [
+                'error' => true,
+                'payload' => $throwable->getMessage()
+            ];
+
+            return response()->json($response)->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function update(Request $request, UpdateTaskAction $action)
+    {
+        try {
+            $response = [
+                'error' => false,
+                'payload' => $action($request->route('project_id'), $request->route('task_id'))
+            ];
+
+            return response()->json($response)->setStatusCode(Response::HTTP_OK);
 
         } catch (Throwable $throwable) {
             $response = [
