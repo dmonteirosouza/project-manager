@@ -9,18 +9,22 @@
                     <div class="text-right">
                       <span class="text-xs font-semibold inline-block" v-bind:class="{
                           'text-pink-600': project.percent <= 33.33,
-                          'text-amber-200': project.percent > 33.33 && project.percent <= 66.66,
-                          'text-emerald-300': project.percent > 33.33 && project.percent <= 66.66,
+                          'text-yellow-600': project.percent > 33.33 && project.percent <= 66.66,
+                          'text-green-600': project.percent > 66.66,
                       }">
                         {{ project.percent }}%
                       </span>
                     </div>
                 </div>
-                <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-pink-200">
+                <div class="overflow-hidden h-2 mb-4 text-xs flex rounded" v-bind:class="{
+                          'bg-pink-200': project.percent <= 33.33,
+                          'bg-yellow-200': project.percent > 33.33 && project.percent <= 66.66,
+                          'bg-green-200': project.percent > 66.66,
+                      }">
                     <div :style="{ width: project.percent + '%' }" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center" v-bind:class="{
                           'bg-pink-600': project.percent <= 33.33,
-                          'bg-yellow-200': project.percent > 33.33 && project.percent <= 66.66,
-                          'bg-green-300': project.percent > 33.33 && project.percent <= 66.66,
+                          'bg-yellow-600': project.percent > 33.33 && project.percent <= 66.66,
+                          'bg-green-600': project.percent > 66.66,
                       }"></div>
                 </div>
             </div>
