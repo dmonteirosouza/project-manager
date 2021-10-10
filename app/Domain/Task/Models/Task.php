@@ -4,6 +4,7 @@
 namespace Domain\Task\Models;
 
 
+use Domain\Projects\Models\Project;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
@@ -21,4 +22,9 @@ class Task extends Model
         'finish' => 'date:Y-m-d',
         'status' => 'boolean',
     ];
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
 }

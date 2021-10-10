@@ -14,4 +14,9 @@ class TaskController extends Controller
     {
         return Inertia::render('Task/Index');
     }
+
+    public function create(): Response
+    {
+        return Inertia::render('Task/Create');
+    }
 }

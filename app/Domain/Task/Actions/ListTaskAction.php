@@ -10,6 +10,8 @@ class ListTaskAction
 {
     public function __invoke(int $projectId)
     {
-        return Task::where('project_id', $projectId)->get();
+        return Task::with('project')
+            ->where('project_id', $projectId)
+            ->get();
     }
 }

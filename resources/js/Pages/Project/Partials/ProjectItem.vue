@@ -47,13 +47,8 @@
 </template>
 
 <script>
-
 export default {
     name: "ProjectItem",
     props: ['project']
 }
 </script>
-
-<style scoped>
-
-</style>
