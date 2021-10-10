@@ -1,64 +1,224 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Project Manager
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a simple project manager designed to test your programming knowledge
 
-## About Laravel
+## Getting started
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [How to install](#how-to-install)
+    - [Install with Docker](#install-with-docker)
+    - [Install on Windows](#install-on-windows)
+        - [Requirements](#requirements)
+        - [Installation](#installation)
+- [Usage](#usage)
+- [Documentation](#documentation)
+  - [List Projects](#list-projects)
+  - [Add new project](#add-new-project)
+  - [List Projects](#list-projects)
+  - [Add new task](#add-new-task)
+  - [Update task status](#update-task-status)
+- [Technologies used](#technologies-used)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## How to install
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Install with Docker
 
-## Learning Laravel
+```bash
+    git clone https://github.com/dmonteirosouza/project-manager.git \
+    cd project-manager \
+    docker-compose up \
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Install on Windows
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### Requirements
 
-## Laravel Sponsors
+- PHP >= 8.0.11
+- Composer >= 2.1.9
+- Mariadb >= 10.6.4
+- node >= 14.18.0
+- npm >= 6.14.15
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Installation
 
-### Premium Partners
+1) Go to the web server installation directory and download the project, following the image below:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
+![plot](./screenshots/install-windows.png)
 
-## Contributing
+3) Unzip the file *project-manager-master.zip*
+3) Create a database with whatever name you prefer: e.g. project-manager
+4) Edit the .env file the following items
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```dotenv
+DB_HOST=<YOUR HOST> #localhost
+DB_PORT=<YOUR PORT> #3306
+DB_DATABASE=<YOUR DATABASE> #project-manager
+DB_USERNAME=<YOUR USERNAME> #root
+DB_PASSWORD=<YOUR PASSWORD> #root
+```
+5) Open the Powershell and execute the commands below to run:
 
-## Code of Conduct
+```shell
+composer install
+php artisan cache:clear
+php artisan config:cache
+php artisan migrate:fresh --seed
+php artisan serve
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+npm install
+npm run dev
+```
 
-## Security Vulnerabilities
+## Usage
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1) Open in your browser [http://localhost](http://localhost) and click in **Register**.
 
-## License
+![plot](./screenshots/register.PNG)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+2) Fill in the data and save.
+
+![plot](./screenshots/data.PNG)
+
+3) On this page are listed the projects.
+
+![plot](./screenshots/projects.PNG)
+
+4) You can register a new project.
+
+![plot](./screenshots/new-project.PNG)
+
+5) When you save, a message is displayed.
+
+![plot](./screenshots/project-saved.PNG)
+
+6) On this page are listed the tasks.
+
+![plot](./screenshots/tasks.PNG)
+
+7) You can register a new task.
+
+![plot](./screenshots/new-task.PNG)
+
+8) When you save, a message is displayed.
+
+![plot](./screenshots/task-saved.PNG)
+
+9) You can change task status.
+
+![plot](./screenshots/task-changed.PNG)
+
+## Documentation
+
+You can import the workspace that is in the root directory (Insomnia.json)
+
+### List projects
+```http
+curl -X GET http://localhost/api/projects
+```
+#### Response
+```json
+{
+    "error": false,
+    "payload": {
+        "id": 1,
+        "name": "New Project",
+        "start": "2021-10-10",
+        "finish": "2021-10-16",
+        "created_at": "2021-10-10T17:15:01.000000Z",
+        "updated_at": "2021-10-10T17:15:01.000000Z",
+        "percent": 0,
+        "deadline": false
+    }
+}
+```
+
+### Add new project
+```http
+curl -X POST -d '{"name":"New Project","start":"2021-10-08","finish":"2021-10-10"}' \
+-H 'Content-Type: application/json' \
+http://localhost/api/projects
+```
+#### Response
+```json
+{
+    "error": false,
+    "payload": {
+        "id": 1,
+        "name": "New Project",
+        "start": "2021-10-10",
+        "finish": "2021-10-16",
+        "created_at": "2021-10-10T17:15:01.000000Z",
+        "updated_at": "2021-10-10T17:15:01.000000Z",
+        "percent": 0,
+        "deadline": false
+    }
+}
+```
+
+### List tasks
+```http
+curl -X GET http://localhost/api/projects/{project_id}/tasks
+```
+#### Response
+```json
+{
+    "error": false,
+    "payload": {
+        "id": 9,
+        "project_id": 1,
+        "name": "New Task",
+        "start": "2021-10-08",
+        "finish": "2021-10-10",
+        "status": false,
+        "created_at": "2021-10-10T19:45:16.000000Z",
+        "updated_at": "2021-10-10T19:45:16.000000Z",
+        "project": {
+            "id": 1,
+            "name": "New Project",
+            "start": "2021-10-10",
+            "finish": "2021-10-16",
+            "created_at": "2021-10-10T17:15:01.000000Z",
+            "updated_at": "2021-10-10T17:15:01.000000Z"
+        }
+    }
+}
+```
+
+### Add new task
+```http
+curl -X POST -d '{"name":"New Task","start":"2021-10-08","finish":"2021-10-10"}' \
+-H 'Content-Type: application/json' \
+http://localhost/api/projects/{project_id}/tasks
+```
+#### Response
+```json
+{
+    "error": false,
+    "payload": {
+        "name": "New Task",
+        "start": "2021-10-08",
+        "finish": "2021-10-10"
+    }
+}
+```
+
+### Update task status
+```http
+curl -X PUT -H 'Content-Type: application/json' \
+http://localhost/api/projects/{project_id}/tasks/{task_id}
+```
+#### Response
+```json
+{
+    "error": false,
+    "payload": true
+}
+```
+
+## Technologies used
+
+- Docker
+- PHP 8
+- Mariadb 10
+- Vue 3
+- Inertia
+- Tailwindcss
