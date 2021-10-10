@@ -25936,7 +25936,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   )])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-white", {
       'bg-green-600': !$props.project.deadline,
-      'bg-pink-300': $props.project.deadline
+      'bg-pink-600': $props.project.deadline
     }])
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.project.deadline ? 'Yes' : 'No'), 3
   /* TEXT, CLASS */

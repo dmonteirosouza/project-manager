@@ -4,6 +4,7 @@
 namespace Domain\Projects\Actions;
 
 
+use Carbon\Carbon;
 use Domain\Projects\Models\Project;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -34,10 +35,10 @@ final class ListProjectAction
 
             $project->percent = (float)number_format($percent, 2);
 
-            $project->deadline = (bool)$tasks
-                ->where('finish', '>', $project->finish)
-                ->sortByDesc('finish')
-                ->first();
+            $project->deadline = $tasks
+                    ->where('finish', '>', $project->finish)
+                    ->sortByDesc('finish')
+                    ->first() || Carbon::now()->format('Y-m-d') > $project->finish;
 
             return $project;
         });

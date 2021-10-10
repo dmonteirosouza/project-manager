@@ -29,7 +29,7 @@
             <div>
               <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-white" v-bind:class="{
                   'bg-green-600': !project.deadline,
-                  'bg-pink-300': project.deadline,
+                  'bg-pink-600': project.deadline,
               }">
                 {{ project.deadline ? 'Yes' : 'No' }}
               </span>
