@@ -16,6 +16,7 @@ This is a simple project manager designed to test your programming knowledge
   - [List Projects](#list-projects)
   - [Add new task](#add-new-task)
   - [Update task status](#update-task-status)
+- [Status Codes](#status-codes)
 - [Technologies used](#technologies-used)
 
 ## How to install
@@ -108,7 +109,7 @@ npm run dev
 
 ## Documentation
 
-You can import the workspace that is in the root directory (Insomnia.json)
+You can import the [Insomnia](Insomnia.json) workspace.
 
 ### List projects
 ```http
