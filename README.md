@@ -137,6 +137,11 @@ curl -X POST -d '{"name":"New Project","start":"2021-10-08","finish":"2021-10-10
 -H 'Content-Type: application/json' \
 http://localhost/api/projects
 ```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `name` | `string` | **Required** |
+| `start` | `date` | **Required** |
+| `finish` | `date` | **Required**|
 #### Response
 ```json
 {
@@ -189,6 +194,12 @@ curl -X POST -d '{"name":"New Task","start":"2021-10-08","finish":"2021-10-10"}'
 -H 'Content-Type: application/json' \
 http://localhost/api/projects/{project_id}/tasks
 ```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `name` | `string` | **Required** |
+| `start` | `date` | **Required** |
+| `finish` | `date` | **Required**|
+| `status` | `bool` | **Optional**|
 #### Response
 ```json
 {
@@ -213,6 +224,20 @@ http://localhost/api/projects/{project_id}/tasks/{task_id}
     "payload": true
 }
 ```
+
+## Status Codes
+
+Status codes in this API:
+
+| Status Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+| 201 | `CREATED` |
+| 202 | `ACCEPTED` |
+| 204 | `NO CONTENT` |
+| 400 | `BAD REQUEST` |
+| 404 | `NOT FOUND` |
+| 500 | `INTERNAL SERVER ERROR` |
 
 ## Technologies used
 
